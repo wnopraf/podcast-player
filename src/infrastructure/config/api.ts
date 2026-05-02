@@ -9,5 +9,9 @@ export const API_CONFIG = {
         `/search?term=${encodeURIComponent(term)}&media=podcast&entity=podcast&limit=${limit}`,
       lookup: (id: string) => `/lookup?id=${id}&media=podcast`,
     },
+    episodes: {
+      lookup: (collectionId: string, limit: number = 50) =>
+        `/lookup?id=${collectionId}&entity=podcastEpisode&limit=${limit}`,
+    },
   },
 } as const;
