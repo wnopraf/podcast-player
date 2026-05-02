@@ -1,7 +1,7 @@
-import type { Episode } from '../../domain/entities/Episode';
-import type { EpisodeRepository } from '../../domain/ports/EpisodeRepository';
-import type { Result } from '../../shared/types/Result';
-import type { ApplicationError } from '../../shared/errors/ApplicationError';
+import type { Episode } from '@domain/entities/Episode';
+import type { EpisodeRepository } from '@domain/ports/EpisodeRepository';
+import type { Result } from '@shared/types/Result';
+import type { ApplicationError } from '@shared/errors/ApplicationError';
 
 export class GetEpisodesUseCase {
   private episodeRepository: EpisodeRepository;

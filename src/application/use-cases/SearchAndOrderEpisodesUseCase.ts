@@ -1,5 +1,5 @@
-import { FilterService } from '../../domain/services/FilterService';
-import type { Episode } from '../../domain/entities/Episode';
+import { FilterService } from '@domain/services/FilterService';
+import type { Episode } from '@domain/entities/Episode';
 
 export type EpisodeOrderBy = 'releaseDate' | 'title' | 'trackTimeMillis';
 

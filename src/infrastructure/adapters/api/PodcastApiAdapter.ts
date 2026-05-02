@@ -1,10 +1,10 @@
-import { API_CONFIG } from '../../config/api';
-import type { PodcastRepository } from '../../../domain/ports/PodcastRepository';
-import type { Podcast } from '../../../domain/entities/Podcast';
-import type { ItunesSearchResponse } from '../../dto/ItunesPodcastDto';
-import { PodcastMapper } from '../../mappers/PodcastMapper';
-import { Result } from '../../../shared/types/Result';
-import { NetworkError, ApplicationError } from '../../../shared/errors/ApplicationError';
+import { API_CONFIG } from '@infrastructure/config/api';
+import type { PodcastRepository } from '@domain/ports/PodcastRepository';
+import type { Podcast } from '@domain/entities/Podcast';
+import type { ItunesSearchResponse } from '@infrastructure/dto/ItunesPodcastDto';
+import { PodcastMapper } from '@infrastructure/mappers/PodcastMapper';
+import { Result } from '@shared/types/Result';
+import { NetworkError, ApplicationError } from '@shared/errors/ApplicationError';
 
 export class PodcastApiAdapter implements PodcastRepository {
   async findAll(): Promise<Result<Podcast[], ApplicationError>> {

@@ -1,5 +1,5 @@
-import { FilterService } from '../../domain/services/FilterService';
-import type { Podcast } from '../../domain/entities/Podcast';
+import { FilterService } from '@domain/services/FilterService';
+import type { Podcast } from '@domain/entities/Podcast';
 
 export type PodcastOrderBy = 'releaseDate' | 'title' | 'author';
 

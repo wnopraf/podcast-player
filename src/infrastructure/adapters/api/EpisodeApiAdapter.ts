@@ -1,10 +1,10 @@
-import { API_CONFIG } from '../../config/api';
-import type { EpisodeRepository } from '../../../domain/ports/EpisodeRepository';
-import type { Episode } from '../../../domain/entities/Episode';
-import type { ItunesEpisodesResponse } from '../../dto/ItunesEpisodeDto';
-import { EpisodeMapper } from '../../mappers/EpisodeMapper';
-import { Result } from '../../../shared/types/Result';
-import { NetworkError, ApplicationError } from '../../../shared/errors/ApplicationError';
+import { API_CONFIG } from '@infrastructure/config/api';
+import type { EpisodeRepository } from '@domain/ports/EpisodeRepository';
+import type { Episode } from '@domain/entities/Episode';
+import type { ItunesEpisodesResponse } from '@infrastructure/dto/ItunesEpisodeDto';
+import { EpisodeMapper } from '@infrastructure/mappers/EpisodeMapper';
+import { Result } from '@shared/types/Result';
+import { NetworkError, ApplicationError } from '@shared/errors/ApplicationError';
 
 export class EpisodeApiAdapter implements EpisodeRepository {
   async findByCollectionId(collectionId: string): Promise<Result<Episode[], ApplicationError>> {

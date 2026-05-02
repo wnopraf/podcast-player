@@ -1,4 +1,4 @@
-import type { ApplicationError } from '../errors/ApplicationError.ts';
+import type { ApplicationError } from '@shared/errors/ApplicationError';
 
 export type Result<T, E = ApplicationError> =
   | { success: true; data: T }

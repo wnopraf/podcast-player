@@ -1,5 +1,5 @@
-import { EpisodeEntity } from '../../domain/entities/Episode';
-import type { ItunesEpisodeDto } from '../dto/ItunesEpisodeDto';
+import { EpisodeEntity } from '@domain/entities/Episode';
+import type { ItunesEpisodeDto } from '@infrastructure/dto/ItunesEpisodeDto';
 
 export class EpisodeMapper {
   static toDomain(dto: ItunesEpisodeDto): EpisodeEntity {

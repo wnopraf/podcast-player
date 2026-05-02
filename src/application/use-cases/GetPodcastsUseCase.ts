@@ -1,7 +1,7 @@
-import type { Podcast } from '../../domain/entities/Podcast';
-import type { PodcastRepository } from '../../domain/ports/PodcastRepository';
-import type { Result } from '../../shared/types/Result';
-import type { ApplicationError } from '../../shared/errors/ApplicationError';
+import type { Podcast } from '@domain/entities/Podcast';
+import type { PodcastRepository } from '@domain/ports/PodcastRepository';
+import type { Result } from '@shared/types/Result';
+import type { ApplicationError } from '@shared/errors/ApplicationError';
 
 export class GetPodcastsUseCase {
   private podcastRepository: PodcastRepository;

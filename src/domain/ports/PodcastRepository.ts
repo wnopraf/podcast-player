@@ -1,6 +1,6 @@
-import type { Podcast } from '../entities/Podcast';
-import type { Result } from '../../shared/types/Result';
-import type { ApplicationError } from '../../shared/errors/ApplicationError';
+import type { Podcast } from '@domain/entities/Podcast';
+import type { Result } from '@shared/types/Result';
+import type { ApplicationError } from '@shared/errors/ApplicationError';
 
 export interface PodcastRepository {
   findAll(): Promise<Result<Podcast[], ApplicationError>>;
