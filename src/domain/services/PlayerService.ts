@@ -1,3 +1,7 @@
+import type { Episode } from '@domain/entities/Episode';
+import { EpisodeQueueService } from '@domain/services/EpisodeQueueService';
+import type { EpisodeQueue } from '@domain/entities/EpisodeQueue';
+
 export interface AudioPlayer {
   load(url: string): Promise<void>;
   play(): Promise<void>;
@@ -7,20 +11,28 @@ export interface AudioPlayer {
   getCurrentTime(): number;
   getDuration(): number;
   isPlaying(): boolean;
+  onTimeUpdate(callback: (time: number) => void): void;
+  onEnded(callback: () => void): void;
   destroy(): void;
 }
 
 export class PlayerService {
   private audioPlayer: AudioPlayer | null = null;
+  private queueService: EpisodeQueueService;
   private DEFAULT_ERROR_MSG = 'Audio player not initialized';
   currentEpisodeId: string | null = null;
+  private queue: EpisodeQueue | null = null;
 
-  constructor(audioPlayer: AudioPlayer) {
+  constructor(audioPlayer: AudioPlayer, queueService: EpisodeQueueService) {
     this.audioPlayer = audioPlayer;
+    this.queueService = queueService;
   }
 
-  async playEpisode(episodeId: string, streamUrl: string): Promise<void> {
+  async playEpisode(episodes: Episode[], episodeId: string, streamUrl: string): Promise<void> {
     if (!this.audioPlayer) throw new Error(this.DEFAULT_ERROR_MSG);
+
+    const startIndex = episodes.findIndex((ep) => ep.id === episodeId);
+    this.queue = this.queueService.createQueue(episodes, startIndex);
 
     this.currentEpisodeId = episodeId;
     await this.audioPlayer.load(streamUrl);
@@ -67,6 +79,44 @@ export class PlayerService {
     return this.audioPlayer.isPlaying();
   }
 
+  async playNext(): Promise<void> {
+    if (!this.queue || !this.queue.hasNext) {
+      return;
+    }
+
+    this.queue = this.queueService.next(this.queue);
+    const nextEpisode = this.queue.currentEpisode;
+
+    if (nextEpisode && nextEpisode.streamUrl) {
+      await this.playEpisode(this.queue.episodes, nextEpisode.id, nextEpisode.streamUrl);
+    }
+  }
+
+  async playPrevious(): Promise<void> {
+    if (!this.queue || !this.queue.hasPrevious) {
+      return;
+    }
+
+    this.queue = this.queueService.previous(this.queue);
+    const previousEpisode = this.queue.currentEpisode;
+
+    if (previousEpisode && previousEpisode.streamUrl) {
+      await this.playEpisode(this.queue.episodes, previousEpisode.id, previousEpisode.streamUrl);
+    }
+  }
+
+  toggleShuffle(): void {
+    if (!this.queue) {
+      return;
+    }
+
+    this.queue = this.queueService.toggleShuffle(this.queue);
+  }
+
+  getQueue(): EpisodeQueue | null {
+    return this.queue;
+  }
+
   getCurrentEpisodeId(): string | null {
     return this.currentEpisodeId;
   }
@@ -77,5 +127,6 @@ export class PlayerService {
       this.audioPlayer = null;
     }
     this.currentEpisodeId = null;
+    this.queue = null;
   }
 }
