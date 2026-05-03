@@ -3,6 +3,9 @@ import type { AudioPlayer } from '@domain/services/PlayerService';
 export class AudioPlayerAdapter implements AudioPlayer {
   private audio: HTMLAudioElement | null = null;
   private DEFAULT_ERROR_MSG = 'Audio element not initialized';
+  private timeUpdateCallback?: (time: number) => void;
+  private endedCallback?: () => void;
+
   constructor() {
     this.audio = new Audio();
     this.setupEventListeners();
@@ -17,6 +20,18 @@ export class AudioPlayerAdapter implements AudioPlayer {
 
     this.audio.addEventListener('stalled', () => {
       console.warn('Audio stalled');
+    });
+
+    this.audio.addEventListener('timeupdate', () => {
+      if (this.timeUpdateCallback && this.audio) {
+        this.timeUpdateCallback(this.audio.currentTime);
+      }
+    });
+
+    this.audio.addEventListener('ended', () => {
+      if (this.endedCallback) {
+        this.endedCallback();
+      }
     });
   }
 
@@ -85,6 +100,14 @@ export class AudioPlayerAdapter implements AudioPlayer {
   isPlaying(): boolean {
     if (!this.audio) return false;
     return !this.audio.paused;
+  }
+
+  onTimeUpdate(callback: (time: number) => void): void {
+    this.timeUpdateCallback = callback;
+  }
+
+  onEnded(callback: () => void): void {
+    this.endedCallback = callback;
   }
 
   destroy(): void {
