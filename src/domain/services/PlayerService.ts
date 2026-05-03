@@ -22,10 +22,30 @@ export class PlayerService {
   private DEFAULT_ERROR_MSG = 'Audio player not initialized';
   currentEpisodeId: string | null = null;
   private queue: EpisodeQueue | null = null;
+  private onTimeUpdateCallback?: (time: number) => void;
+  private onEpisodeEndedCallback?: () => void;
 
   constructor(audioPlayer: AudioPlayer, queueService: EpisodeQueueService) {
     this.audioPlayer = audioPlayer;
     this.queueService = queueService;
+    this.setupEventListeners();
+  }
+
+  private setupEventListeners(): void {
+    if (!this.audioPlayer) return;
+
+    this.audioPlayer.onTimeUpdate((time) => {
+      if (this.onTimeUpdateCallback) {
+        this.onTimeUpdateCallback(time);
+      }
+    });
+
+    this.audioPlayer.onEnded(async () => {
+      await this.playNext();
+      if (this.onEpisodeEndedCallback) {
+        this.onEpisodeEndedCallback();
+      }
+    });
   }
 
   async playEpisode(episodes: Episode[], episodeId: string, streamUrl: string): Promise<void> {
@@ -115,6 +135,14 @@ export class PlayerService {
 
   getQueue(): EpisodeQueue | null {
     return this.queue;
+  }
+
+  onTimeUpdate(callback: (time: number) => void): void {
+    this.onTimeUpdateCallback = callback;
+  }
+
+  onEpisodeEnded(callback: () => void): void {
+    this.onEpisodeEndedCallback = callback;
   }
 
   getCurrentEpisodeId(): string | null {
