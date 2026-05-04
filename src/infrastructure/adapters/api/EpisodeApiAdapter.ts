@@ -19,9 +19,7 @@ export class EpisodeApiAdapter implements EpisodeRepository {
       const data: ItunesEpisodesResponse = await response.json();
       return Result.ok(EpisodeMapper.toDomainList(data.results));
     } catch (error) {
-      return Result.error(
-        new ApplicationError('Failed to fetch episodes', error as Error)
-      );
+      return Result.error(new ApplicationError('Failed to fetch episodes', error as Error));
     }
   }
 }

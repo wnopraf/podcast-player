@@ -63,7 +63,7 @@ export class AudioPlayerAdapter implements AudioPlayer {
 
   async play(): Promise<void> {
     if (!this.audio) throw new Error(this.DEFAULT_ERROR_MSG);
-    
+
     return this.audio.play();
   }
 
@@ -119,4 +119,3 @@ export class AudioPlayerAdapter implements AudioPlayer {
     }
   }
 }
-

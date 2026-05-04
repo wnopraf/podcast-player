@@ -19,9 +19,7 @@ export class PodcastApiAdapter implements PodcastRepository {
       const data: ItunesSearchResponse = await response.json();
       return Result.ok(PodcastMapper.toDomainList(data.results));
     } catch (error) {
-      return Result.error(
-        new ApplicationError('Failed to fetch podcasts', error as Error)
-      );
+      return Result.error(new ApplicationError('Failed to fetch podcasts', error as Error));
     }
   }
 
@@ -42,9 +40,7 @@ export class PodcastApiAdapter implements PodcastRepository {
 
       return Result.ok(PodcastMapper.toDomain(data.results[0]));
     } catch (error) {
-      return Result.error(
-        new ApplicationError('Failed to fetch podcast', error as Error)
-      );
+      return Result.error(new ApplicationError('Failed to fetch podcast', error as Error));
     }
   }
 }

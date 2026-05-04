@@ -82,8 +82,6 @@ export class PlayerService {
     this.audioPlayer.setVolume(clampedVolume);
   }
 
- 
-
   getCurrentPosition(): number {
     if (!this.audioPlayer) throw new Error(this.DEFAULT_ERROR_MSG);
     return this.audioPlayer.getCurrentTime();

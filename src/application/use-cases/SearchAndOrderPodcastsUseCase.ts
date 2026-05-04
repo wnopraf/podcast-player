@@ -10,7 +10,11 @@ export class SearchAndOrderPodcastsUseCase {
     orderBy: PodcastOrderBy = 'releaseDate',
     orderDirection: 'asc' | 'desc' = 'desc'
   ): Podcast[] {
-    const filtered = FilterService.byText(podcasts, searchTerm, ['title', 'author', 'primaryGenreName']);
+    const filtered = FilterService.byText(podcasts, searchTerm, [
+      'title',
+      'author',
+      'primaryGenreName',
+    ]);
     return FilterService.orderBy(filtered, orderBy, orderDirection);
   }
 }
