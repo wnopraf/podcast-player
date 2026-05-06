@@ -118,7 +118,7 @@ describe('EpisodeQueueService', () => {
     const unshuffledQueue = service.toggleShuffle(shuffledQueue);
 
     expect(unshuffledQueue.isShuffle).toBe(false);
-    // Verify they are sorted by release date descending 
+    // Verify they are sorted by release date descending
     expect(unshuffledQueue.episodes[0].releaseDate).toBe('2024-01-03');
     expect(unshuffledQueue.episodes[1].releaseDate).toBe('2024-01-02');
     expect(unshuffledQueue.episodes[2].releaseDate).toBe('2024-01-01');
