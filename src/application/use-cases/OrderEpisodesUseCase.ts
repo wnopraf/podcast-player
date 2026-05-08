@@ -3,14 +3,12 @@ import type { Episode } from '@domain/entities/Episode';
 
 export type EpisodeOrderBy = 'releaseDate' | 'title' | 'trackTimeMillis';
 
-export class SearchAndOrderEpisodesUseCase {
+export class OrderEpisodesUseCase {
   execute(
     episodes: Episode[],
-    searchTerm: string,
     orderBy: EpisodeOrderBy = 'releaseDate',
     orderDirection: 'asc' | 'desc' = 'desc'
   ): Episode[] {
-    const filtered = FilterService.byText(episodes, searchTerm, ['title', 'topic']);
-    return FilterService.orderBy(filtered, orderBy, orderDirection);
+    return FilterService.orderBy(episodes, orderBy, orderDirection);
   }
 }
