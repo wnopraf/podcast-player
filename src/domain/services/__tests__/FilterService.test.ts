@@ -133,8 +133,8 @@ describe('FilterService', () => {
 
     it('should return 0 for incomparable types', () => {
       const podcasts = [
-        createMockPodcast({ title: 'A', trackCount: undefined as any }),
-        createMockPodcast({ title: 'B', trackCount: undefined as any }),
+        createMockPodcast({ title: 'A', trackCount: undefined }),
+        createMockPodcast({ title: 'B', trackCount: undefined }),
       ];
       const result = FilterService.orderBy(podcasts, 'trackCount', 'asc');
 
