@@ -17,6 +17,7 @@
     "test:browser": "vitest --browser"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.100.9",
     "awilix": "^13.0.3",
     "date-fns": "^4.1.0",
     "react": "^19.2.5",
