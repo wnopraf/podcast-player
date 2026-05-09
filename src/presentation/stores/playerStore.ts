@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import type { Episode } from '@domain/entities/Episode';
 import type { EpisodeQueue } from '@domain/entities/EpisodeQueue';
-import { createPlayerService } from '@infrastructure/di/playerDi';
+import type { PlayerService } from '@domain/services/PlayerService';
+import { diContainer } from '@infrastructure/di/container';
 
-const playerService = createPlayerService();
+const playerService = diContainer.resolve<PlayerService>('playerService');
 
 interface PlayerState {
   isPlaying: boolean;
