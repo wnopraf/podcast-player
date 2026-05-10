@@ -1,10 +1,15 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ErrorBoundary } from '../components/ErrorBoundary';
 import App from '../../App';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
+    element: (
+      <ErrorBoundary>
+        <App />
+      </ErrorBoundary>
+    ),
     // TODO: Add child routes when components are created
     // children: [
     //   {
