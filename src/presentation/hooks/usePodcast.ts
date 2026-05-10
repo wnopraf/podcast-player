@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import { diContainer } from '@infrastructure/di/container';
 import type { GetPodcastUseCase } from '@application/use-cases/GetPodcastUseCase';
 import { Result } from '@shared/types/Result';
+import { ApplicationError } from '@shared/errors/ApplicationError';
 
 const getPodcastUseCase = diContainer.resolve<GetPodcastUseCase>('getPodcastUseCase');
 
@@ -16,6 +17,12 @@ export const usePodcast = (id: string) => {
       return result.data;
     },
     enabled: !!id,
+    throwOnError: (error) => {
+      if (error instanceof ApplicationError) {
+        return error.code === 'NETWORK_ERROR';
+      }
+      return true;
+    },
   });
 };
 
